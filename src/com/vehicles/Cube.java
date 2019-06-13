@@ -2,6 +2,7 @@ package com.vehicles;
 
 import java.awt.Color;
 
+import com.Game;
 import com.Player;
 import com.Vehicle;
 
@@ -12,7 +13,7 @@ public class Cube extends Vehicle {
 	@Override
 	public void click(Player p) {
 		if (p.isGrounded()) {
-			p.setyVelocity(-JUMP_HEIGHT);
+			p.setyVelocity(JUMP_HEIGHT * Game.getGravityConstant());
 			p.setGrounded(false);
 		}
 	}

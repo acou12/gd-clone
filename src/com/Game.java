@@ -88,4 +88,8 @@ public class Game extends PApplet {
 	public static void setGravityState(GravityState gravityState) {
 		Game.gravityState = gravityState;
 	}
+	
+	public static int getGravityConstant() {
+		return (gravityState == GravityState.DOWN) ? -1 : 1;
+	}
 }

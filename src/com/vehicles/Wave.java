@@ -18,9 +18,9 @@ public class Wave extends Vehicle {
 	@Override
 	public void tick(Player p) {
 		if (Game.g.mousePressed) {
-			p.setyVelocity(-WAVE_STEEPNESS);
+			p.setyVelocity(WAVE_STEEPNESS * Game.getGravityConstant());
 		} else {
-			p.setyVelocity(WAVE_STEEPNESS);	
+			p.setyVelocity(WAVE_STEEPNESS * -Game.getGravityConstant());	
 		}
 	}
 	

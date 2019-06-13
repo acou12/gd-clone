@@ -3,6 +3,7 @@ import java.awt.Color;
 
 import com.vehicles.Cube;
 import com.vehicles.Helicopter;
+import com.vehicles.Ship;
 import com.vehicles.Ufo;
 import com.vehicles.Wave;
 
@@ -15,7 +16,7 @@ public class Game extends PApplet {
 	private static final int LENGTH = 1920;
 	private static final int HEIGHT = 1080;
 	
-	private static final float GRAVITY = 0.6F;
+	public static final float GRAVITY = 0.6F;
 	private static final int GROUND_HEIGHT = HEIGHT - 300;
 	private static final float MOVE_SPEED = 8;
 
@@ -72,12 +73,14 @@ public class Game extends PApplet {
 	public void keyPressed() {
 		if (key == 'u') {
 			player.setV(new Ufo());
-		}if (key == 'c') {
+		} if (key == 'c') {
 			player.setV(new Cube());
-		}  if (key == 'm') {
+		} if (key == 'm') {
 			player.setV(new Helicopter());
-		}  if (key == 'w') {
+		} if (key == 'w') {
 			player.setV(new Wave());
+		} if (key == 's') {
+			player.setV(new Ship());
 		}
 	}
 

@@ -5,16 +5,15 @@ import java.awt.Color;
 import com.Player;
 import com.Vehicle;
 
-public class Cube extends Vehicle {
+public class Ufo extends Vehicle {
 
 	public static final float JUMP_HEIGHT = 10;
 		
+
 	@Override
 	public void click(Player p) {
-		if (p.isGrounded()) {
-			p.setyVelocity(-JUMP_HEIGHT);
-			p.setGrounded(false);
-		}
+		p.setyVelocity(-JUMP_HEIGHT);
+		p.setGrounded(false);
 	}
 
 	@Override
@@ -22,10 +21,10 @@ public class Cube extends Vehicle {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public Color getColor() {
-		return Color.GREEN;
+		return Color.ORANGE;
 	}
-	
+
 }

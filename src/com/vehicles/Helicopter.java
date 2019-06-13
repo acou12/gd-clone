@@ -2,19 +2,18 @@ package com.vehicles;
 
 import java.awt.Color;
 
+import com.Game;
+import com.GravityState;
 import com.Player;
 import com.Vehicle;
 
-public class Cube extends Vehicle {
+public class Helicopter extends Vehicle {
 
-	public static final float JUMP_HEIGHT = 10;
-		
+
 	@Override
 	public void click(Player p) {
-		if (p.isGrounded()) {
-			p.setyVelocity(-JUMP_HEIGHT);
-			p.setGrounded(false);
-		}
+		GravityState newState = GravityState.inverse(Game.getGravityState());
+		Game.setGravityState(newState);
 	}
 
 	@Override
@@ -22,10 +21,10 @@ public class Cube extends Vehicle {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public Color getColor() {
-		return Color.GREEN;
+		return Color.PINK;
 	}
 	
 }

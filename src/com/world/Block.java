@@ -1,5 +1,9 @@
 package com.world;
 
+import com.Game;
+import com.Player;
+import com.world.Block.CollisionDirection;
+
 public class Block {
 	private float x, y;
 	private float sizeX, sizeY;
@@ -48,5 +52,18 @@ public class Block {
 	
 	public enum CollisionDirection {
 		LEFT, RIGHT, TOP, BOTTOM;
+	}
+	
+	public void touch(Player player, CollisionDirection d) {
+		if (d == CollisionDirection.TOP) {
+			player.setY(getY() - 1);
+			player.setyVelocity(0);
+			player.setGrounded(true);
+		} else if (d == CollisionDirection.BOTTOM) {
+			player.setY(getY() + getSizeY());
+			player.setyVelocity(0);
+		} else if (d == CollisionDirection.LEFT) {
+			Game.death();
+		}
 	}
 }

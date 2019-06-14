@@ -10,6 +10,7 @@ import com.vehicles.Ufo;
 import com.vehicles.Wave;
 import com.world.Block;
 import com.world.Block.CollisionDirection;
+import com.world.Redblock;
 
 import processing.core.PApplet;
 
@@ -21,8 +22,10 @@ public class Game extends PApplet {
 	private static final int HEIGHT = 1080;
 	
 	public static final float GRAVITY = 0.6F;
-	private static final int GROUND_HEIGHT = HEIGHT - 300;
+	public static final int GROUND_HEIGHT = HEIGHT - 300;
 	private static final float MOVE_SPEED = 8;
+	
+	private static boolean shiftPressed = false;
 
 	private static GravityState gravityState = GravityState.DOWN;
 	
@@ -34,7 +37,7 @@ public class Game extends PApplet {
 		PApplet.runSketch(new String[]{"Geometry Dash"}, g);
 	}
 	
-	Player player = new Player();
+	static Player player = new Player();
 	
 	@Override
 	public void settings() {
@@ -44,6 +47,11 @@ public class Game extends PApplet {
 	@Override
 	public void setup() {
 		
+	}
+	
+	public static void death() {
+		player.setY(Game.g.GROUND_HEIGHT);
+		player.setX(0);
 	}
 	
 	@Override
@@ -71,19 +79,13 @@ public class Game extends PApplet {
 		for (Block b : blocks) {
 			if (b.isInside(player.getX(), player.getY())) {
 				CollisionDirection d = b.getDirection(oldX, oldY);
-				if (d == CollisionDirection.TOP) {
-					player.setY(b.getY() - 1);
-					player.setyVelocity(0);
-					player.setGrounded(true);
-				} else if (d == CollisionDirection.BOTTOM) {
-					player.setY(b.getY() + b.getSizeY());
-					player.setyVelocity(0);
-				} else if (d == CollisionDirection.LEFT) {
-					player.setY(GROUND_HEIGHT);
-					player.setX(0);
-				}
+				b.touch(player, d);
 			}
-			fill(255);
+			if (b instanceof Redblock) {
+				fill(255, 0, 0);
+			} else {
+				fill(255, 255, 255);
+			}
 			rect(b.getX(), b.getY(), b.getSizeX(), b.getSizeY());
 		}
 		Color c = player.getV().getColor();
@@ -98,7 +100,9 @@ public class Game extends PApplet {
 	
 	public void gameTick() {
 		if (mousePressed && mouseButton == RIGHT) {
-			Block b = new Block(mouseX, mouseY);
+			Block b = (!shiftPressed) ? 
+					new Block(mouseX, mouseY) :
+					new Redblock(mouseX, mouseY);
 			blocks.add(b);
 		}
 	}
@@ -107,7 +111,7 @@ public class Game extends PApplet {
 	public void keyPressed() {
 		if (key == 'u') {
 			player.setV(new Ufo());
-		} if (key == 'c') {
+		} if (key == 'c') {;
 			player.setV(new Cube());
 		} if (key == 'm') {
 			player.setV(new Helicopter());
@@ -115,9 +119,20 @@ public class Game extends PApplet {
 			player.setV(new Wave());
 		} if (key == 's') {
 			player.setV(new Ship());
+		} if (keyCode == SHIFT) {
+			shiftPressed = true;
+		} if (key == 'r') {
+			blocks.clear();
 		}
 	}
 
+	@Override
+	public void keyReleased() {
+		if (keyCode == SHIFT) {
+			shiftPressed = false;
+		}
+	}
+	
 	public static GravityState getGravityState() {
 		return gravityState;
 	}

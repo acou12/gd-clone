@@ -67,15 +67,24 @@ public class Game extends PApplet {
 		if (player.getX() > LENGTH) {
 			player.setX(0);
 		}
+		gameTick();
 		for (Block b : blocks) {
 			if (b.isInside(player.getX(), player.getY())) {
 				CollisionDirection d = b.getDirection(oldX, oldY);
 				if (d == CollisionDirection.TOP) {
-					player.setY(b.getY());
+					player.setY(b.getY() - 1);
+					player.setyVelocity(0);
+					player.setGrounded(true);
 				} else if (d == CollisionDirection.BOTTOM) {
 					player.setY(b.getY() + b.getSizeY());
+					player.setyVelocity(0);
+				} else if (d == CollisionDirection.LEFT) {
+					player.setY(GROUND_HEIGHT);
+					player.setX(0);
 				}
 			}
+			fill(255);
+			rect(b.getX(), b.getY(), b.getSizeX(), b.getSizeY());
 		}
 		Color c = player.getV().getColor();
 		fill(c.getRed(), c.getGreen(), c.getBlue());
@@ -84,7 +93,14 @@ public class Game extends PApplet {
 	
 	@Override
 	public void mousePressed() {
-		player.getV().click(player);
+		if (mouseButton == LEFT) player.getV().click(player);
+	}
+	
+	public void gameTick() {
+		if (mousePressed && mouseButton == RIGHT) {
+			Block b = new Block(mouseX, mouseY);
+			blocks.add(b);
+		}
 	}
 	
 	@Override

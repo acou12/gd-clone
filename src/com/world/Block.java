@@ -4,6 +4,14 @@ public class Block {
 	private float x, y;
 	private float sizeX, sizeY;
 	
+	private static float DEFAULT_BLOCK_SIZE = 60;
+	
+	public Block(float x, float y) {
+		this.x = x;
+		this.y = y;
+		sizeX = sizeY = DEFAULT_BLOCK_SIZE;
+	}
+
 	public float getX() {
 		return x;
 	}

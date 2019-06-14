@@ -12,16 +12,15 @@ public class Cube extends Vehicle {
 		
 	@Override
 	public void click(Player p) {
-		if (p.isGrounded()) {
-			p.setyVelocity(JUMP_HEIGHT * Game.getGravityConstant());
-			p.setGrounded(false);
-		}
+		
 	}
 
 	@Override
 	public void tick(Player p) {
-		// TODO Auto-generated method stub
-		
+		if (Game.g.mousePressed && Game.g.mouseButton == Game.g.LEFT && p.isGrounded()) {
+			p.setyVelocity(JUMP_HEIGHT * Game.getGravityConstant());
+			p.setGrounded(false);
+		}
 	}
 
 	@Override

@@ -8,7 +8,9 @@ import com.vehicles.Helicopter;
 import com.vehicles.Ship;
 import com.vehicles.Ufo;
 import com.vehicles.Wave;
+import com.world.ActiveBlock;
 import com.world.Block;
+import com.world.MovingBlock;
 import com.world.Block.CollisionDirection;
 import com.world.Redblock;
 
@@ -27,6 +29,8 @@ public class Game extends PApplet {
 	private static final float MOVE_SPEED = 8;
 	
 	private static boolean shiftPressed = false;
+	private static boolean controlPressed = false;
+	
 
 	private static GravityState gravityState = GravityState.DOWN;
 	
@@ -84,10 +88,15 @@ public class Game extends PApplet {
 			}
 			if (b instanceof Redblock) {
 				fill(255, 0, 0);
+			} else if (b instanceof ActiveBlock) {
+				fill(0, 255, 0);
 			} else {
 				fill(255, 255, 255);
 			}
 			rect(b.getX(), b.getY(), b.getSizeX(), b.getSizeY());
+			if (b instanceof ActiveBlock) {
+				((ActiveBlock) b).tick();
+			}
 		}
 		Color c = player.getV().getColor();
 		fill(c.getRed(), c.getGreen(), c.getBlue());
@@ -101,9 +110,14 @@ public class Game extends PApplet {
 	
 	public void gameTick() {
 		if (mousePressed && mouseButton == RIGHT) {
-			Block b = (!shiftPressed) ? 
-					new Block(mouseX, mouseY) :
-					new Redblock(mouseX, mouseY);
+			Block b;
+			if (shiftPressed) {
+				b = new Redblock(mouseX, mouseY);
+			} else if (controlPressed) {
+				b = new MovingBlock(mouseX, mouseY);
+			} else {
+				b = new Block(mouseX, mouseY);
+			}
 			blocks.add(b);
 		}
 	}
@@ -124,6 +138,8 @@ public class Game extends PApplet {
 			shiftPressed = true;
 		} if (key == 'r') {
 			blocks.clear();
+		} if (keyCode == CONTROL) {
+			controlPressed = true;
 		}
 	}
 
@@ -131,6 +147,8 @@ public class Game extends PApplet {
 	public void keyReleased() {
 		if (keyCode == SHIFT) {
 			shiftPressed = false;
+		} if (keyCode == CONTROL) {
+			controlPressed = false;
 		}
 	}
 	

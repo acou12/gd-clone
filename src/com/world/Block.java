@@ -5,8 +5,9 @@ import com.Player;
 import com.world.Block.CollisionDirection;
 
 public class Block {
-	private float x, y;
-	private float sizeX, sizeY;
+	protected float x;
+	protected float y;
+	protected float sizeX, sizeY;
 	
 	private static float DEFAULT_BLOCK_SIZE = 60;
 	

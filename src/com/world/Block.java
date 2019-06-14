@@ -59,10 +59,11 @@ public class Block {
 		if (d == CollisionDirection.TOP) {
 			player.setY(getY() - 1);
 			player.setyVelocity(0);
-			player.setGrounded(true);
+			if (Game.getGravityConstant() == -1) player.setGrounded(true);
 		} else if (d == CollisionDirection.BOTTOM) {
 			player.setY(getY() + getSizeY());
 			player.setyVelocity(0);
+			if (Game.getGravityConstant() == 1) player.setGrounded(true);
 		} else if (d == CollisionDirection.LEFT) {
 			Game.death();
 		}

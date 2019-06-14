@@ -20,6 +20,7 @@ public class Game extends PApplet {
 
 	private static final int LENGTH = 1920;
 	private static final int HEIGHT = 1080;
+	private static final float PLAYER_SIZE = 30;
 	
 	public static final float GRAVITY = 0.6F;
 	public static final int GROUND_HEIGHT = HEIGHT - 300;
@@ -90,7 +91,7 @@ public class Game extends PApplet {
 		}
 		Color c = player.getV().getColor();
 		fill(c.getRed(), c.getGreen(), c.getBlue());
-		rect(player.getX(), player.getY() - 30, 30, 30);
+		rect(player.getX(), player.getY() - PLAYER_SIZE, PLAYER_SIZE, PLAYER_SIZE);
 	}
 	
 	@Override

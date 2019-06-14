@@ -11,8 +11,9 @@ import com.vehicles.Ufo;
 import com.vehicles.Wave;
 import com.world.ActiveBlock;
 import com.world.Block;
-import com.world.MovingBlock;
 import com.world.Block.CollisionDirection;
+import com.world.Invisiblock;
+import com.world.MovingBlock;
 import com.world.Redblock;
 
 import processing.core.PApplet;
@@ -90,7 +91,11 @@ public class Game extends PApplet {
 			if (b instanceof Redblock) {
 				fill(255, 0, 0);
 			} else if (b instanceof ActiveBlock) {
-				fill(0, 255, 0);
+				if (b instanceof Invisiblock) {
+					noStroke();
+					fill(255, 0, 255, ((Invisiblock) b).getAlpha());
+				}
+				else fill(0, 255, 0);
 			} else {
 				fill(255, 255, 255);
 			}
@@ -115,7 +120,7 @@ public class Game extends PApplet {
 			if (shiftPressed) {
 				b = new Redblock(mouseX, mouseY);
 			} else if (controlPressed) {
-				b = new MovingBlock(mouseX, mouseY);
+				b = new Invisiblock(mouseX, mouseY);
 			} else {
 				b = new Block(mouseX, mouseY);
 			}

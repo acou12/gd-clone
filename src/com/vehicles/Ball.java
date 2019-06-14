@@ -7,25 +7,23 @@ import com.GravityState;
 import com.Player;
 import com.Vehicle;
 
-public class Helicopter extends Vehicle {
-
+public class Ball extends Vehicle {
 
 	@Override
 	public void click(Player p) {
-		GravityState newState = GravityState.inverse(Game.getGravityState());
-		Game.setGravityState(newState);
-		p.setGrounded(false);
+		if (p.isGrounded()) {
+			Game.setGravityState(GravityState.inverse(Game.getGravityState()));
+			p.setGrounded(false);
+		}
 	}
 
 	@Override
 	public void tick(Player p) {
-		// TODO Auto-generated method stub
-		
 	}
-	
+
 	@Override
 	public Color getColor() {
-		return Color.PINK;
+		return Color.YELLOW;
 	}
-	
+
 }

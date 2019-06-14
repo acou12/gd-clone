@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vehicles.Ball;
 import com.vehicles.Cube;
 import com.vehicles.Helicopter;
 import com.vehicles.Ship;
@@ -138,6 +139,11 @@ public class Game extends PApplet {
 			shiftPressed = true;
 		} if (key == 'r') {
 			blocks.clear();
+			player.setX(0);
+			player.setY(GROUND_HEIGHT);
+			player.setyVelocity(0);
+		} if (key == 'b') {
+			player.setV(new Ball());
 		} if (keyCode == CONTROL) {
 			controlPressed = true;
 		}

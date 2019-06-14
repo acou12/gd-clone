@@ -1,11 +1,15 @@
 package com;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.vehicles.Cube;
 import com.vehicles.Helicopter;
 import com.vehicles.Ship;
 import com.vehicles.Ufo;
 import com.vehicles.Wave;
+import com.world.Block;
+import com.world.Block.CollisionDirection;
 
 import processing.core.PApplet;
 
@@ -22,6 +26,8 @@ public class Game extends PApplet {
 
 	private static GravityState gravityState = GravityState.DOWN;
 	
+	public static List<Block> blocks = new ArrayList<Block>();
+
 	public static Game g = new Game();
 	
 	public static void main(String... args) {
@@ -45,6 +51,8 @@ public class Game extends PApplet {
 		background(0);
 		stroke(255);
 		line(0, GROUND_HEIGHT, LENGTH, GROUND_HEIGHT);
+		float oldX = player.getX();
+		float oldY = player.getY();
 		player.getV().tick(player);
 		player.setX(player.getX() + MOVE_SPEED);
 		player.setY(player.getY() + player.getyVelocity());
@@ -58,6 +66,16 @@ public class Game extends PApplet {
 		}
 		if (player.getX() > LENGTH) {
 			player.setX(0);
+		}
+		for (Block b : blocks) {
+			if (b.isInside(player.getX(), player.getY())) {
+				CollisionDirection d = b.getDirection(oldX, oldY);
+				if (d == CollisionDirection.TOP) {
+					player.setY(b.getY());
+				} else if (d == CollisionDirection.BOTTOM) {
+					player.setY(b.getY() + b.getSizeY());
+				}
+			}
 		}
 		Color c = player.getV().getColor();
 		fill(c.getRed(), c.getGreen(), c.getBlue());

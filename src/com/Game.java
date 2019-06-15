@@ -83,11 +83,15 @@ public class Game extends PApplet {
 			player.setX(0);
 		}
 		gameTick();
+		for (float xo = 0; xo < PLAYER_SIZE; xo += PLAYER_SIZE - 1)
+		for (float yo = 0; yo < PLAYER_SIZE; yo += PLAYER_SIZE - 1)
 		for (Block b : blocks) {
-			if (b.isInside(player.getX(), player.getY())) {
-				CollisionDirection d = b.getDirection(oldX, oldY);
+			if (b.isInside(player.getX() + xo, player.getY() + yo - PLAYER_SIZE)) {
+				CollisionDirection d = b.getDirection(oldX + xo, oldY + yo - PLAYER_SIZE);
 				b.touch(player, d);
 			}
+		}
+		for (Block b : blocks) {
 			if (b instanceof Redblock) {
 				fill(255, 0, 0);
 			} else if (b instanceof ActiveBlock) {

@@ -16,6 +16,31 @@ public class Block {
 		this.y = y;
 		sizeX = sizeY = DEFAULT_BLOCK_SIZE;
 	}
+	
+	public Block(float x1, float y1, float x2, float y2) {
+		
+		if (x1 < x2) {
+			this.x = x1;
+			this.sizeX = x2 - x1;
+		} else if (x2 < x1) {
+			this.x = x2;
+			this.sizeX = x1 - x2;
+		} else {
+			this.x = this.sizeX = 0;
+		}
+		
+		if (y1 < y2) {
+			this.y = y1;
+			this.sizeY = y2 - y1;
+		} else if (y2 < y1) {
+			this.y = y2;
+			this.sizeY = y1 - y2;
+		} else {
+			this.y = this.sizeY = 0;
+		}
+		
+		
+	}
 
 	public float getX() {
 		return x;
@@ -61,7 +86,7 @@ public class Block {
 			player.setyVelocity(0);
 			if (Game.getGravityConstant() == -1) player.setGrounded(true);
 		} else if (d == CollisionDirection.BOTTOM) {
-			player.setY(getY() + getSizeY() + Game.PLAYER_SIZE);
+			player.setY(getY() + getSizeY() + Game.PLAYER_SIZE + 1);
 			player.setyVelocity(0);
 			if (Game.getGravityConstant() == 1) player.setGrounded(true);
 		} else if (d == CollisionDirection.LEFT) {

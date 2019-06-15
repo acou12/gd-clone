@@ -13,7 +13,7 @@ public class Ship extends Vehicle {
 
 	@Override
 	public void tick(Player p) {
-		if (Game.g.mousePressed) {
+		if (Game.g.mousePressed && Game.g.mouseButton == Game.g.LEFT) {
 			p.setyVelocity(p.getyVelocity() + 2 * Game.GRAVITY * Game.getGravityConstant());
 		}
 	}

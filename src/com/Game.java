@@ -13,10 +13,10 @@ import com.world.ActiveBlock;
 import com.world.Block;
 import com.world.Block.CollisionDirection;
 import com.world.Invisiblock;
-import com.world.MovingBlock;
 import com.world.Redblock;
 
 import processing.core.PApplet;
+import processing.core.PVector;
 
 public class Game extends PApplet {
 	
@@ -24,16 +24,19 @@ public class Game extends PApplet {
 
 	private static final int LENGTH = 1920;
 	private static final int HEIGHT = 1080;
-	public static final float PLAYER_SIZE = 30;
+	public static final float PLAYER_SIZE = 60;
 	
-	public static final float GRAVITY = 0.6F;
+	public static final float GRAVITY = 0.8F;
 	public static final int GROUND_HEIGHT = HEIGHT - 300;
-	private static final float MOVE_SPEED = 8;
+	private static final float MOVE_SPEED  = 8;
 	
 	private static boolean shiftPressed = false;
 	private static boolean controlPressed = false;
 	
-
+	public static boolean rightPressed = false;
+	public static PVector startPosition;
+	
+	
 	private static GravityState gravityState = GravityState.DOWN;
 	
 	public static List<Block> blocks = new ArrayList<Block>();
@@ -92,6 +95,10 @@ public class Game extends PApplet {
 				break;
 			}
 		}
+		if (rightPressed) {
+			fill(255, 255, 255, 127);
+			rect(startPosition.x, startPosition.y, mouseX - startPosition.x, mouseY - startPosition.y);
+		}
 		for (Block b : blocks) {
 			if (b instanceof Redblock) {
 				fill(255, 0, 0);
@@ -117,20 +124,22 @@ public class Game extends PApplet {
 	@Override
 	public void mousePressed() {
 		if (mouseButton == LEFT) player.getV().click(player);
+		if (mouseButton == RIGHT) {
+			rightPressed = true;
+			startPosition = new PVector(mouseX, mouseY);
+		}
+	}
+	
+	@Override
+	public void mouseReleased() {
+		if (mouseButton == RIGHT) {
+			rightPressed = false;
+			Block b = new Block(startPosition.x, startPosition.y, mouseX, mouseY);
+			blocks.add(b);
+		}
 	}
 	
 	public void gameTick() {
-		if (mousePressed && mouseButton == RIGHT) {
-			Block b;
-			if (shiftPressed) {
-				b = new Redblock(mouseX, mouseY);
-			} else if (controlPressed) {
-				b = new Invisiblock(mouseX, mouseY);
-			} else {
-				b = new Block(mouseX, mouseY);
-			}
-			blocks.add(b);
-		}
 	}
 	
 	@Override
@@ -156,6 +165,15 @@ public class Game extends PApplet {
 			player.setV(new Ball());
 		} if (keyCode == CONTROL) {
 			controlPressed = true;
+		} if (key == 'd') {
+			for (int i = blocks.size() - 1; i >= 0; i--) {
+				Block b = blocks.get(i);
+				if ((b.getX() <= mouseX && mouseX <= b.getX() + b.getSizeX()) 
+					&& (b.getY() <= mouseY && mouseY <= b.getY() + b.getSizeY())) {
+					blocks.remove(i);
+					break;
+				}
+			}
 		}
 	}
 

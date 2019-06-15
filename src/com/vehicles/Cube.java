@@ -8,7 +8,7 @@ import com.Vehicle;
 
 public class Cube extends Vehicle {
 
-	public static final float JUMP_HEIGHT = 10;
+	public static final float JUMP_HEIGHT = 20;
 		
 	@Override
 	public void click(Player p) {

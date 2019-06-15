@@ -24,7 +24,7 @@ public class Game extends PApplet {
 
 	private static final int LENGTH = 1920;
 	private static final int HEIGHT = 1080;
-	private static final float PLAYER_SIZE = 30;
+	public static final float PLAYER_SIZE = 30;
 	
 	public static final float GRAVITY = 0.6F;
 	public static final int GROUND_HEIGHT = HEIGHT - 300;
@@ -89,6 +89,7 @@ public class Game extends PApplet {
 			if (b.isInside(player.getX() + xo, player.getY() + yo - PLAYER_SIZE)) {
 				CollisionDirection d = b.getDirection(oldX + xo, oldY + yo - PLAYER_SIZE);
 				b.touch(player, d);
+				break;
 			}
 		}
 		for (Block b : blocks) {

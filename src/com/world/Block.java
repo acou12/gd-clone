@@ -61,7 +61,7 @@ public class Block {
 			player.setyVelocity(0);
 			if (Game.getGravityConstant() == -1) player.setGrounded(true);
 		} else if (d == CollisionDirection.BOTTOM) {
-			player.setY(getY() + getSizeY());
+			player.setY(getY() + getSizeY() + Game.PLAYER_SIZE);
 			player.setyVelocity(0);
 			if (Game.getGravityConstant() == 1) player.setGrounded(true);
 		} else if (d == CollisionDirection.LEFT) {
